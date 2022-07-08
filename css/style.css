@@ -2,7 +2,6 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    background-color: rgb(163, 157, 157);
 }
 
 .img {
@@ -14,7 +13,11 @@ header {
     display: flex;
     justify-content: space-evenly;
     align-items: center;
-    background-color: rgb(6, 0, 7);
+    background-color: rgb(47, 15, 53);
+}
+
+body {
+    background-color: rgb(170, 15, 15)
 }
 
 .titulo {
