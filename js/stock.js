@@ -11,7 +11,7 @@ const productos =
 
     {
         id: 2,
-        nombre: "Motherboard ROG Crosshair VIII HERO WI-FI",
+        nombre: "Motherboard ROG Crosshair VIII HERO",
         precio: 80000,
         img: '/images/motherboard.jpg',
         cantidad: 1
@@ -65,6 +65,13 @@ const productos =
         nombre: "Mouse ASUS ROG Keris Wireless 16k DPI",
         precio: 20000,
         img: '/images/mouse.jpg',
+        cantidad: 1
+    },
+    {
+        id: 9,
+        nombre: "Fuente ASUS ROG THOR 1200P 80 Plus",
+        precio: 80000,
+        img: '/images/fuente.jpg',
         cantidad: 1
     }
 ]
