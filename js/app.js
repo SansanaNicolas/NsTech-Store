@@ -1,11 +1,10 @@
-
+import { productos } from "./stock.js";
 
 const contadorCarrito = document.getElementById("contador-carrito");
+const precioTotal = document.getElementById('precioTotal');
 let contador = 0;
 
-function pintarContador() {
-    contadorCarrito.textContent = contador;
-}
+
 
 export const mostrarProductos = (productos) => {
 
@@ -33,21 +32,12 @@ export const mostrarProductos = (productos) => {
 
 
     const boton = document.getElementById(`agregar${element.id}`);
-
-    boton.addEventListener('click', () => {
-   alert("agregado con exito!");
-   contador++;
-   pintarContador();
+     boton.addEventListener('click', () => {
+      carritoIndex(element.id);
 
 });
 });
 };
-
-export const obtenerCarritoStorage = () => {
-    const carritoStorage = JSON.parse(localStorage.getItem("carrito"))
-    return carritoStorage;
-  }
-
 
   // modal
 
@@ -70,3 +60,82 @@ export const obtenerCarritoStorage = () => {
     e.preventDefault();
     localStorage.clear();
   })
+
+  
+  // carro
+
+  const carritoIndex = (productoId) => {
+    let carritoDeCompras = [];
+    if (localStorage.getItem("carrito")) {
+      carritoDeCompras = obtenerCarritoStorage();
+    }
+    let productoRepetido = carritoDeCompras.find(producto => producto.id == productoId);
+    contarProductosRepetidos(productoRepetido, productoId, carritoDeCompras);
+    }
+
+    
+  export const actualizarCarrito = (carritoDeCompras) => {
+    contadorCarrito.innerText = carritoDeCompras.reduce((acc, el) => acc + el.cantidad, 0);
+    precioTotal.innerText = carritoDeCompras.reduce((acc, el) => acc + (el.precio * el.cantidad), 0);
+    localStorage.setItem("carrito", JSON.stringify(carritoDeCompras));
+  }
+
+    
+  
+    const contarProductosRepetidos = (prodRepetido, productoId, carritoDeCompras) => {
+      if (prodRepetido) {
+        prodRepetido.cantidad++
+        document.getElementById(`cantidad${prodRepetido.id}`).innerHTML = `<p id=cantidad${prodRepetido.id}>Cantidad:${prodRepetido.cantidad}</p>`;
+        actualizarCarrito(carritoDeCompras);
+      } else {
+        agregarProductoAlCarrito(productoId, carritoDeCompras);
+      }
+    }
+
+    const agregarProductoAlCarrito = (productoId, carritoDeCompras) => {
+    const contenedor = document.getElementById('carrito-contenedor');
+    const producto = productos.find(producto => producto.id == productoId);
+    carritoDeCompras.push(producto);
+  
+    producto.cantidad = 1;
+  
+    const div = document.createElement('div');
+    div.classList.add('productoEnCarrito');
+    div.innerHTML = ` <p>${producto.nombre}</p>
+                      <p>Precio:${producto.precio}</p>
+                      <p id=cantidad${producto.id}>Cantidad:${producto.cantidad}</p>
+                      <button id=eliminar${producto.id} value="${producto.id}">X</button>
+                    `
+      contenedor.appendChild(div);
+    actualizarCarrito(carritoDeCompras);
+  };
+
+  export const eliminarProductoCarrito = (productoId) => {
+    const carritoStorage = obtenerCarritoStorage();
+    const carritoActualizado = carritoStorage.filter(el => el.id != productoId);
+  
+    actualizarCarrito(carritoActualizado);
+    renderProductosCarrito(carritoActualizado);
+  };
+
+  export const renderProductosCarrito = (carritoDeCompras) => {
+    const contenedor = document.getElementById('carrito-contenedor');
+  
+    contenedor.innerHTML = "";
+  
+    carritoDeCompras.forEach(producto => {
+      const div = document.createElement('div');
+      div.classList.add('productoEnCarrito');
+      div.innerHTML = ` <p>${producto.nombre}</p>
+                        <p>Precio:${producto.precio}</p>
+                        <p id=cantidad${producto.id}>Cantidad:${producto.cantidad}</p>
+                        <button id=eliminar${producto.id} class="btn waves-effect waves-light boton-eliminar" value="${producto.id}">X</button>
+                      `
+      contenedor.appendChild(div);
+    });
+  };
+
+  export const obtenerCarritoStorage = () => {
+    const carritoStorage = JSON.parse(localStorage.getItem("carrito"))
+    return carritoStorage;
+  }
