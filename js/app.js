@@ -33,6 +33,13 @@ export const mostrarProductos = (productos) => {
     const boton = document.getElementById(`agregar${element.id}`);
      boton.addEventListener('click', () => {
       carritoIndex(element.id);
+      swal.fire({
+        title: "Genial",
+        text: "El producto ha sido añadido al carrito",
+        icon: "success",
+        confirm: "Ok",
+        timer: 2000
+      })
 
 });
 });
