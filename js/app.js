@@ -64,8 +64,23 @@ export const mostrarProductos = (productos) => {
 
   limpiarCarrito.addEventListener("click", (e) => {
     e.preventDefault();
-    location.reload();
-    localStorage.clear();
+    swal.fire({
+      title: "¿Esta seguro de vaciar el carrito?",
+      icon: "warning",
+      showCancelButton: true,
+      buttons: true,
+      dangerMode: true
+    }).then( (result) =>  {
+      if (result.isConfirmed) {
+        location.reload();
+        localStorage.clear();
+        swal.fire({
+          title: "borrado",
+          icon: "sucess",
+          text: "El producto ha sido borrado"
+        })
+      }
+    })
   })
 
   
