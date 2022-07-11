@@ -2,7 +2,6 @@ import { productos } from "./stock.js";
 
 const contadorCarrito = document.getElementById("contador-carrito");
 const precioTotal = document.getElementById('precioTotal');
-let contador = 0;
 
 
 
@@ -58,6 +57,7 @@ export const mostrarProductos = (productos) => {
 
   limpiarCarrito.addEventListener("click", (e) => {
     e.preventDefault();
+    location.reload();
     localStorage.clear();
   })
 
