@@ -79,8 +79,6 @@ export const mostrarProductos = (productos) => {
           icon: "sucess",
           text: "El producto ha sido borrado"
         })
-        location.reload();
-        localStorage.clear();
       }
     })
   })
